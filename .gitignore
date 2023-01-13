@@ -1,2 +1,5 @@
 # Unnecessary MacOS file
 .DS_Store
+/Ex3/.idea
+/Ex3/racetrack/.idea
+/Ex3/towardsDataScience/.idea
