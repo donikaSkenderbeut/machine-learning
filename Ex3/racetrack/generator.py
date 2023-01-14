@@ -1,5 +1,6 @@
 import random
 import math
+import numpy as np
 
 
 class RacetrackGenerator:
@@ -76,6 +77,23 @@ class RacetrackGenerator:
 
         # Return racetrack
         return self.racetrack
+
+    def racetrack1_from_book(self):
+        self.racetrack = np.full((32, 17), '*', dtype=np.str)
+        self.racetrack[31, 3:9] = 'S'
+        self.racetrack[0:6, 16] = 'F'
+        self.racetrack[0, 0:3] = 'X'
+        self.racetrack[1:3, 0:2] = 'X'
+        self.racetrack[3][0] = 'X'
+        self.racetrack[6, 10:] = 'X'
+        self.racetrack[7:, 9:] = 'X'
+        self.racetrack[14:22, 0] = 'X'
+        self.racetrack[22:29, 0:2] = 'X'
+        self.racetrack[29:, 0:3] = 'X'
+
+        return self.racetrack.tolist()
+
+    # TODO: racetrack2_from_book():
 
     def print_racetrack(self):
         for row in self.racetrack:
