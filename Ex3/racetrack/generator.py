@@ -4,11 +4,6 @@ import numpy as np
 
 
 class RacetrackGenerator:
-    """
-    Class that generates racetracks
-    @author: Dante Godolja
-
-    """
 
     def __init__(self):
         self.racetrack = []
@@ -94,7 +89,35 @@ class RacetrackGenerator:
 
         return self.racetrack
 
-    # TODO: racetrack2_from_book():
+    def racetrack2_from_book(self):
+        self.racetrack = np.full((30, 33), '*', dtype=np.str)
+        self.racetrack[0:, 0] = 'X'
+        self.racetrack[0:27, 1] = 'X'
+        self.racetrack[0:26, 2] = 'X'
+        self.racetrack[0:25, 3] = 'X'
+        self.racetrack[0:24, 4] = 'X'
+        self.racetrack[0:23, 5] = 'X'
+        self.racetrack[0:22, 6] = 'X'
+        self.racetrack[0:21, 7] = 'X'
+        self.racetrack[0:20, 8] = 'X'
+        self.racetrack[0:19, 9] = 'X'
+        self.racetrack[0:18, 10] = 'X'
+        self.racetrack[0:17, 11] = 'X'
+        self.racetrack[0:3, 12] = 'X'
+        self.racetrack[7:16, 12] = 'X'
+        self.racetrack[0:2, 13] = 'X'
+        self.racetrack[8:15, 13] = 'X'
+        self.racetrack[0:1, 14:16] = 'X'
+        self.racetrack[9:14, 14] = 'X'
+        self.racetrack[0:9, 32] = 'F'
+        self.racetrack[9:, 31:] = 'X'
+        self.racetrack[10:, 28:31] = 'X'
+        self.racetrack[11:, 27] = 'X'
+        self.racetrack[12:, 25:27] = 'X'
+        self.racetrack[13:, 24] = 'X'
+        self.racetrack[29, 1:24] = 'S'
+
+        return self.racetrack
 
     def print_racetrack(self):
         for row in self.racetrack.tolist():

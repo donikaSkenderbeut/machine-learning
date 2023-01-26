@@ -2,13 +2,16 @@ import numpy as np
 from generator import RacetrackGenerator
 import matplotlib.pyplot as plt
 
-# number of race track rows and columns
 rows, cols = 32, 18
+#rows, cols = 30, 33
 
 gen = RacetrackGenerator()
 racetrack = gen.racetrack1_from_book()
 start_cols = range(4, 10)
-fin_cells = {(26, cols-1), (27, cols-1), (28, cols-1), (29, cols-1), (30, cols-1), (31, cols-1)}
+#start_cols = range(1, 24)
+fin_cells = {(26, cols - 1), (27, cols - 1), (28, cols - 1), (29, cols - 1), (30, cols - 1), (31, cols - 1)}
+#fin_cells = {(21, cols-1), (22, cols-1), (23, cols-1), (24, cols-1), (25, cols-1), (26, cols-1), (27, cols-1),
+#             (28, cols-1), (29, cols-1)}
 
 epsilon = 0.1
 gamma = 1
@@ -33,13 +36,13 @@ vel_len = 5
 # compute all valid actions for each velocity combination i.e vertical 0 horizontal 0, v 1 h 0 ...
 # Both velocity components are restricted to be non-negative and less than 5, and they cannot both be zero.
 valid_acts = [
-    [actions.index(a) for a in actions if (h + a[0]) in range(5) and (v + a[1]) in range(5) and not((h + a[0]) == 0 and
-                                                                                                    (v + a[1]) == 0)]
+    [actions.index(a) for a in actions if (h + a[0]) in range(5) and (v + a[1]) in range(5) and not ((h + a[0]) == 0 and
+                                                                                                     (v + a[1]) == 0)]
     for h in range(vel_len)
     for v in range(vel_len)
 ]
 
-# put values in dict for easy accessibility
+# put values in dict for ease of accessibility
 dict_valid_acts = {}
 j = 0
 for h in range(vel_len):
@@ -64,9 +67,9 @@ for r in range(rows):
 # initialize state, action, behaviour policy probability arrays
 tmp = np.empty((), dtype=object)
 tmp[()] = (0, 0, 0, 0)
-S = np.full(10**6, tmp, dtype=object)
-A = np.empty((10**6), dtype=int)
-B = np.empty((10**6), dtype=float)
+S = np.full(10 ** 6, tmp, dtype=object)
+A = np.empty((10 ** 6), dtype=int)
+B = np.empty((10 ** 6), dtype=float)
 
 
 def learn_policy(eps, noise=True):
@@ -84,7 +87,7 @@ def learn_policy(eps, noise=True):
         # choose next action and generate behavioral policy using ε-greedy policy if pi(s)=a is valid
         # otherwise choose randomly, and save its probability
         pi_a = pi[s[0], s[1], s[2], s[3]]
-        pi_a_valid = pi_a in acts # if pi(s) returns valid index that can be found in the valid action indices then True
+        pi_a_valid = pi_a in acts  # if pi(s) returns valid index that can be found in the valid action then True
         if np.random.rand() >= eps:
             if pi_a_valid:
                 a = pi_a
@@ -103,6 +106,7 @@ def learn_policy(eps, noise=True):
             a = 0
             b = 0.1
 
+        # save index of taken action and probability
         A[t] = a
         B[t] = b
         act = actions[a]
@@ -121,7 +125,8 @@ def learn_policy(eps, noise=True):
             return t
 
         # check if car hits boundary
-        if not (0 <= next_s[0] < rows) or not (0 <= next_s[1] < cols) or racetrack[rows-1-next_s[0]][next_s[1]] == 'X':
+        if not (0 <= next_s[0] < rows) or not (0 <= next_s[1] < cols) or racetrack[rows - 1 - next_s[0]][next_s[1]] \
+                == 'X':
             # go back to start
             s = (0, np.random.choice(start_cols), 0, 0)
         else:
@@ -136,7 +141,7 @@ def apply_mc_control(T):
     W = 1.0
     R = -1
 
-    for t in range(T-1, 0, -1):
+    for t in range(T - 1, 0, -1):
         s = S[t]
 
         G = gamma * G + R
@@ -144,7 +149,12 @@ def apply_mc_control(T):
         Q[s[0], s[1], s[2], s[3], A[t]] += W * (G - Q[s[0], s[1], s[2], s[3], A[t]]) / C[s[0], s[1], s[2], s[3], A[t]]
 
         acts = dict_valid_acts[(s[2], s[3])]
+
+        # from Q choose the index of the action in given state which returns the highest value
+        # and update the target policy accordingly
         pi[s[0], s[1], s[2], s[3]] = acts[np.argmax(Q[s[0], s[1], s[2], s[3], :][acts])]
+
+        # if chosen action at given timestamp does not comply with the target policy then proceed to next episode
         if A[t] != pi[s[0], s[1], s[2], s[3]]:
             return t
 
@@ -156,9 +166,9 @@ def apply_mc_control(T):
 def optimal_trajectories():
     for i in range(3):
         T = learn_policy(0.0, noise=False)
-        print("\noptimal trajectory #{}:".format(i+1))
-        print("S: ", S[0:T+1])
-        print("A: ", A[0:T+1])
+        print("\nOptimal trajectory #{}:".format(i + 1))
+        print("S: ", S[0:T + 1])
+        print("A: ", A[0:T + 1])
         print("R: ", -1 * T)
 
 
@@ -168,9 +178,15 @@ rewards = []
 for i in range(0, episode_num + 1):
     T = learn_policy(epsilon)
     t = apply_mc_control(T)
-    print("Episode {}: {}, {}".format(i, T, t,))
+    print("Episode {}: T={}, t={}, R={}".format(i, T, t, -1 * T))
     rewards.append(-1 * T)
 
-plt.plot(rewards)
+k10_rewards = [rewards[i] for i in range(0, episode_num + 1, 10000)]
+plt.plot(k10_rewards)
+plt.xlabel("Episodes (in ten thousands)")
+plt.ylabel("Rewards")
+
+# change based on which racetrack we are choosing
+plt.title("Rewards from Racetrack 1")
 optimal_trajectories()
 plt.show()
