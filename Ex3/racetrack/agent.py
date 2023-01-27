@@ -118,3 +118,6 @@ class Agent:
         self.S[t] = state
 
         return t
+
+    def get_sab(self):
+        return self.S, self.A, self.B
