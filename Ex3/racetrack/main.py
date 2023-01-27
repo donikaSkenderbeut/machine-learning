@@ -1,5 +1,6 @@
 import numpy as np
 from generator import RacetrackGenerator
+from environment import Environment
 import matplotlib.pyplot as plt
 
 rows, cols = 32, 18
@@ -49,6 +50,9 @@ for h in range(vel_len):
     for v in range(vel_len):
         dict_valid_acts[(h, v)] = valid_acts[j]
         j += 1
+
+print(dict_valid_acts)
+env = Environment(racetrack)
 
 # initialise Q, C and pi
 # Q is the value matrix given state and action
