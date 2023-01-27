@@ -15,7 +15,6 @@ class MonteCarlo:
         cols = racetrack.get_dimensions()[1]
         self.env = env
         self.gamma = gamma
-        self.B = np.empty((10 ** 6), dtype=float)
         self.Q = np.random.rand(rows, cols, vel_len, vel_len, act_len) * -400  # broader range of numbers makes computation faster
         self.C = np.zeros((rows, cols, vel_len, vel_len, act_len))
         self.pi = np.ones((rows, cols, vel_len, vel_len), dtype=int)
@@ -25,7 +24,7 @@ class MonteCarlo:
                     for v in range(vel_len):
                         self.pi[r, c, h, v] = np.argmax(self.Q[r, c, h, v])
 
-    def get_action_from_target_policy(self, state, S, T, A):
+    def get_action_from_target_policy(self, state, S, T, A, B):
         G = 0.0
         W = 1.0
         R = -1
@@ -47,5 +46,5 @@ class MonteCarlo:
             if A[t] != self.pi[s[0], s[1], s[2], s[3]]:
                 return t
 
-            W /= self.B[t]
+            W /= B[t]
         return 0
