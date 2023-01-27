@@ -1,13 +1,13 @@
 import random
 import math
 import numpy as np
-##from agent import Agent
 from generator import RacetrackGenerator
 
 
 class Environment:
 
-    def __init__(self, racetrack: RacetrackGenerator, velocity_constraint: int):
+    def __init__(self, generator: RacetrackGenerator, racetrack: np.ndarray, velocity_constraint: int):
+        self.generator = generator
         self.racetrack = racetrack
         self.actions = [
             (0, 0),
@@ -39,7 +39,7 @@ class Environment:
         return self.dict_valid_acts[agend_velocity]
 
     def reached_finishing_line(self, state, next_state):
-        finish_line = self.racetrack.get_start_finish_line()[1]
+        finish_line = self.generator.get_start_finish_line()[1]
         points = []
 
         x = state[0]
@@ -55,14 +55,15 @@ class Environment:
             return False
 
     def is_out_of_bounds(self, next_s):
-        rows = self.racetrack.get_dimensions[0]
-        cols = self.racetrack.get_dimensions[1]
-        ## check if out of bounds or hit boundary
-        if not (0 <= next_s[0] < rows) or not (0 <= next_s[1] < cols) or self.racetrack[rows - 1 - next_s[0]][next_s[1]] \
-                == 'X':
+        rows = self.generator.get_dimensions()[0]
+        cols = self.generator.get_dimensions()[1]
+
+        # check if out of bounds or hit X
+        if not (0 <= next_s[0] < rows) or not (0 <= next_s[1] < cols) \
+                or self.racetrack[rows - 1 - next_s[0]][next_s[1]] == 'X':
             return True
 
         return False
 
     def get_all_actions(self):
-        return self.actions;
+        return self.actions
