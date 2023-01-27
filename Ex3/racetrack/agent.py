@@ -121,3 +121,15 @@ class Agent:
 
     def get_sab(self):
         return self.S, self.A, self.B
+
+    def change_eps(self, new_eps):
+        self.eps = new_eps
+
+    def print_optimal_trajectories(self):
+        for i in range(3):
+            self.change_eps(0)
+            T = self.learn_policy(noise=False)
+            print("\nOptimal trajectory #{}:".format(i + 1))
+            print("Traversed states: ", self.S[0:T + 1])
+            print("Taken actions: ", self.A[0:T + 1])
+            print("Rewards: ", -1 * T)
