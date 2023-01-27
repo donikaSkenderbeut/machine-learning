@@ -11,7 +11,7 @@ gamma = 1
 velocity_constraint = 5
 env = Environment(gen, 5)
 mc = MonteCarlo(env,gen,velocity_constraint,gamma)
-agent = Agent(epsilon,gen,env,mc)
+agent = Agent(epsilon, gen,env,mc)
 
 episodes = 10 ** 5
 rewards = []
@@ -27,7 +27,7 @@ k10_rewards = [rewards[i] for i in range(0, episodes + 1, 10000)]
 plt.plot(k10_rewards)
 plt.xlabel("Episodes (in ten thousands)")
 plt.ylabel("Rewards")
-
+agent.print_optimal_trajectories()
 # change based on which racetrack we are choosing
 plt.title("Rewards from Racetrack 1")
 plt.show()
