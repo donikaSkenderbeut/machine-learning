@@ -6,9 +6,9 @@ from generator import RacetrackGenerator
 
 class Environment:
 
-    def __init__(self, generator: RacetrackGenerator, racetrack: np.ndarray, velocity_constraint: int):
+    def __init__(self, generator: RacetrackGenerator, velocity_constraint: int):
         self.generator = generator
-        self.racetrack = racetrack
+        self.racetrack = generator.get_racetrack()
         self.actions = [
             (0, 0),
             (0, 1),
