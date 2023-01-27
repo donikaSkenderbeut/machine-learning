@@ -11,9 +11,13 @@ class Agent:
         self.env = env
         self.mc = mc
         self.eps = epsilon
-        self.S = []
-        self.A = []
-        self.B = []
+
+        tmp = np.empty((), dtype=object)
+        tmp[()] = (0, 0, 0, 0)
+
+        self.S = np.full(10 ** 6, tmp, dtype=object)
+        self.A = np.empty((10 ** 6), dtype=int)
+        self.B = np.empty((10 ** 6), dtype=float)
 
     def get_start_state(self):
         """
