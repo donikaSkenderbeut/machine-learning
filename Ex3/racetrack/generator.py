@@ -7,8 +7,14 @@ class RacetrackGenerator:
 
     def __init__(self):
         self.racetrack = []
+        self.rows = 0
+        self.columns = 0
+        self.start_cols = 0
+        self.finish_coords = {}
 
     def generate_racetrack(self, rows, cols):
+        self.rows = rows
+        self.columns = cols
         # Initialize racetrack with 'X' as out of bounds
         self.racetrack = [['X'] * cols for i in range(rows)]
 
@@ -74,7 +80,7 @@ class RacetrackGenerator:
         return self.racetrack
 
     def racetrack1_from_book(self):
-        self.racetrack = np.full((32, 18), '*', dtype=np.str)
+        self.racetrack = np.full((32, 18), '*', dtype=str)
         self.racetrack[31, 4:10] = 'S'
         self.racetrack[0:6, 17] = 'F'
         self.racetrack[0, 1:4] = 'X'
@@ -86,6 +92,9 @@ class RacetrackGenerator:
         self.racetrack[22:29, 1:3] = 'X'
         self.racetrack[29:, 1:4] = 'X'
         self.racetrack[0:, 0] = 'X'
+
+        self.rows = 32
+        self.columns = 18
 
         return self.racetrack
 
@@ -117,8 +126,14 @@ class RacetrackGenerator:
         self.racetrack[13:, 24] = 'X'
         self.racetrack[29, 1:24] = 'S'
 
+        self.rows = 30
+        self.columns = 33
+
         return self.racetrack
 
     def print_racetrack(self):
         for row in self.racetrack.tolist():
             print(''.join(row))
+
+    def return_dimensions(self):
+        return self.rows, self.columns
