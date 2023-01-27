@@ -10,7 +10,7 @@ class RacetrackGenerator:
         self.rows = 0
         self.columns = 0
         self.start_cols = 0
-        self.finish_coords = {}
+        self.finish_coords = []
 
     def generate_racetrack(self, rows, cols):
         self.rows = rows
@@ -95,6 +95,9 @@ class RacetrackGenerator:
 
         self.rows = 32
         self.columns = 18
+        self.finish_coords = [(26, self.columns - 1), (27, self.columns - 1), (28, self.columns - 1),
+                              (29, self.columns - 1), (30, self.columns - 1), (31, self.columns - 1)]
+        self.start_cols = range(4, 10)
 
         return self.racetrack
 
@@ -128,6 +131,10 @@ class RacetrackGenerator:
 
         self.rows = 30
         self.columns = 33
+        self.finish_coords = [(21, self.columns-1), (22, self.columns-1), (23, self.columns-1), (24, self.columns-1),
+                              (25, self.columns-1), (26, self.columns-1), (27, self.columns-1), (28, self.columns-1),
+                              (29, self.columns-1)]
+        self.start_cols = range(1, 24)
 
         return self.racetrack
 
@@ -135,5 +142,8 @@ class RacetrackGenerator:
         for row in self.racetrack.tolist():
             print(''.join(row))
 
-    def return_dimensions(self):
+    def get_dimensions(self):
         return self.rows, self.columns
+
+    def get_start_finish_line(self):
+        return self.start_cols, self.finish_coords
