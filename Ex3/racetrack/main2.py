@@ -6,4 +6,6 @@ gen = RacetrackGenerator()
 racetrack = gen.racetrack1_from_book()
 epsilon = 0.1
 gamma = 1
-env = Environment(gen, )
+velocity_constraint = 5
+env = Environment(gen, 5)
+agent =
