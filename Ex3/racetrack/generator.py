@@ -147,3 +147,6 @@ class RacetrackGenerator:
 
     def get_start_finish_line(self):
         return self.start_cols, self.finish_coords
+
+    def get_racetrack(self):
+        return self.racetrack
