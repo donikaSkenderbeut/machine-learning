@@ -7,7 +7,7 @@ from generator import RacetrackGenerator
 
 class Environment:
 
-    def __init__(self, racetrack:RacetrackGenerator, velocity_constraint:int):
+    def __init__(self, racetrack: RacetrackGenerator, velocity_constraint: int):
         self.racetrack = racetrack
         self.actions = [
             (0, 0),
@@ -35,7 +35,6 @@ class Environment:
 
                 self.dict_valid_acts[(h, v)] = v_actions
 
-
     def get_valid_actions(self, agend_velocity):
         return self.dict_valid_acts[agend_velocity]
 
@@ -55,9 +54,15 @@ class Environment:
         else:
             return False
 
-    def is_out_of_bounds(self, state, next_state):
+    def is_out_of_bounds(self, next_s):
+        rows = self.racetrack.get_dimensions[0]
+        cols = self.racetrack.get_dimensions[1]
+        ## check if out of bounds or hit boundary
+        if not (0 <= next_s[0] < rows) or not (0 <= next_s[1] < cols) or self.racetrack[rows - 1 - next_s[0]][next_s[1]] \
+                == 'X':
+            return True
+
         return False
 
     def get_all_actions(self):
         return self.actions;
-
