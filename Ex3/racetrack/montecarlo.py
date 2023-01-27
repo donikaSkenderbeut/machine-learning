@@ -24,7 +24,7 @@ class MonteCarlo:
                     for v in range(vel_len):
                         self.pi[r, c, h, v] = np.argmax(self.Q[r, c, h, v])
 
-    def get_action_from_target_policy(self, state, S, T, A, B):
+    def apply_mc_control(self, state, S, T, A, B):
         G = 0.0
         W = 1.0
         R = -1
