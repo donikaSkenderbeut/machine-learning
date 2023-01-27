@@ -52,7 +52,7 @@ for h in range(vel_len):
         j += 1
 
 print(dict_valid_acts)
-env = Environment(racetrack)
+env = Environment(racetrack, 5)
 
 # initialise Q, C and pi
 # Q is the value matrix given state and action
