@@ -1,6 +1,3 @@
-import random
-import math
-import numpy as np
 from generator import RacetrackGenerator
 
 
@@ -35,8 +32,8 @@ class Environment:
 
                 self.dict_valid_acts[(h, v)] = v_actions
 
-    def get_valid_actions(self, agend_velocity):
-        return self.dict_valid_acts[agend_velocity]
+    def get_valid_actions(self, agent_velocity):
+        return self.dict_valid_acts[agent_velocity]
 
     def reached_finishing_line(self, state, next_state):
         finish_line = self.generator.get_start_finish_line()[1]

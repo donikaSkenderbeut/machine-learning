@@ -50,7 +50,7 @@ class Agent:
 
             action_idx, prob_behavior = self.epsilon_greedy(self.eps, optimal_action, legal_acts)
 
-            if noise and np.random.rand() > 0.1:
+            if noise and np.random.rand() < 0.1:
                 action_idx = 0
                 prob_behavior = 0.1
 

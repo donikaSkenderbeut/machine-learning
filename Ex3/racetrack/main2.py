@@ -10,15 +10,15 @@ epsilon = 0.1
 gamma = 1
 velocity_constraint = 5
 env = Environment(gen, 5)
-mc = MonteCarlo(env,gen,velocity_constraint,gamma)
-agent = Agent(epsilon, gen,env,mc)
+mc = MonteCarlo(env, gen, velocity_constraint, gamma)
+agent = Agent(epsilon, gen, env, mc)
 
 episodes = 10 ** 5
 rewards = []
 
-for i in range(episodes+1):
+for i in range(episodes + 1):
     T = agent.learn_policy()
-    S,A,B = agent.get_sab()
+    S, A, B = agent.get_sab()
     t = mc.apply_mc_control(S, T, A, B)
     print("Episode {}: T={}, t={}, R={}".format(i, T, t, -1 * T))
     rewards.append(-1 * T)
