@@ -9,7 +9,7 @@ racetrack = gen.racetrack1_from_book()
 epsilon = 0.1
 gamma = 1
 velocity_constraint = 5
-env = Environment(gen, 5)
+env = Environment(gen, velocity_constraint)
 mc = MonteCarlo(env, gen, velocity_constraint, gamma)
 agent = Agent(epsilon, gen, env, mc)
 

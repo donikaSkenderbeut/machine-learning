@@ -26,7 +26,7 @@ class Environment:
             for v in range(self.velocity_constraint):
                 v_actions = []
                 for a in self.actions:
-                    if ((h + a[0]) in range(5) and (v + a[1]) in range(5)) and not (
+                    if ((h + a[0]) in range(self.velocity_constraint) and (v + a[1]) in range(self.velocity_constraint)) and not (
                             (h + a[0]) == 0 and (v + a[1]) == 0):
                         v_actions.append(self.actions.index(a))
 
@@ -36,6 +36,14 @@ class Environment:
         return self.dict_valid_acts[agent_velocity]
 
     def reached_finishing_line(self, state, next_state):
+        """
+        example previous state is (1, 3) velocity is (4, 4) so next state is (5, 7)
+        the function will compute the following path [(1, 3), (2, 4), (3, 5), (4, 6), (5, 7)]
+
+        :param state: the previous state
+        :param next_state: future state
+        :return: whether it hit the finish line or not
+        """
         finish_line = self.generator.get_start_finish_line()[1]
         points = []
 

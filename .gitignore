@@ -3,3 +3,7 @@
 /Ex3/.idea
 /Ex3/racetrack/.idea
 /Ex3/towardsDataScience/.idea
+.idea/
+Ex2/pubg/
+Ex3/racetrack/__pycache__/
+Ex3/racetrack/tst.py

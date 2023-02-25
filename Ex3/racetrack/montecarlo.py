@@ -66,7 +66,8 @@ class MonteCarlo:
             # and update the target policy accordingly
             self.pi[s[0], s[1], s[2], s[3]] = acts[np.argmax(self.Q[s[0], s[1], s[2], s[3], :][acts])]
 
-            # if chosen action at given timestamp does not comply with the target policy then proceed to next episode
+            # if chosen action at given timestamp does not comply with the new target policy then proceed
+            # to next episode
             if A[t] != self.pi[s[0], s[1], s[2], s[3]]:
                 return t
 
